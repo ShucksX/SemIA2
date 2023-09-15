@@ -21,6 +21,7 @@ while (contpart < partic):
   xcoord = []
   ycoord = []
   zcoord = []
+  yd = []
 
   with open("./spheres2d70.csv", 'r') as file:
     csvreader = csv.reader(file)
@@ -42,6 +43,7 @@ while (contpart < partic):
         xcoord.append(int(float(row[0])))
         ycoord.append(int(float(row[1])))
         zcoord.append(int(float(row[2])))
+        yd.append(int(float(row[3])))
         cont = 0
   print ("Pesos tras entrenamiento:")
   print(w0)
@@ -60,7 +62,7 @@ while (contpart < partic):
       y= -1
     else:
       y = 1
-    error = int(float(row[3]))-y
+    error = yd[contprueba]-y
     if (error!=0):
       contcorrec = contcorrec + 1
     contprueba = contprueba + 1
@@ -69,3 +71,7 @@ while (contpart < partic):
   print("de")
   print(len(xcoord))
   contpart = contpart +1
+
+
+
+
