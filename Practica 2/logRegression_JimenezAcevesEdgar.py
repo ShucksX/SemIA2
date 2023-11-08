@@ -4,6 +4,10 @@ import numpy as np
 import csv
 
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import f1_score
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import recall_score
+from sklearn.metrics import precision_score
 
 
 def sigmoid(x):
@@ -40,7 +44,7 @@ class LogisticRegression():
         return class_pred
 
 
-
+print("Logistic Regression")
 print("Cual dataset vas a usar? (1 a 3)")
 dataset = int(float(input()))
 if(dataset == 1):
@@ -58,8 +62,9 @@ if(dataset == 1):
         clf.fit(X_train,y_train)
         y_pred = clf.predict(X_test)
         acc = accuracy(y_pred,y_test)
-        print("Precision:")
+        print("Accuracy:")
         print(acc)
+        
 
 elif(dataset == 2):
     X2 = np.ndarray(shape=(4898,11), dtype=float, order='F')
@@ -87,8 +92,18 @@ elif(dataset == 2):
         clf.fit(X_train,y_train)
         y_pred = clf.predict(X_test)
         acc = accuracy(y_pred,y_test)
-        print("Precision:")
+        print("Accuracy:")
         print(acc)
+        precision = precision_score(y_test, y_pred,average='macro', zero_division=1)
+        print("Precision:")
+        print(precision)
+        sensitivity = recall_score(y_test, y_pred,average='macro', zero_division=1)
+        print("Sensitivity:")
+        print(sensitivity)
+        f1 = f1_score(y_test, y_pred,average='macro', zero_division=1)
+        print("F1 score:")
+        print(f1)
+        
 
 elif(dataset == 3):
     X3 = np.ndarray(shape=(768,8), dtype=float, order='F')
@@ -113,8 +128,22 @@ elif(dataset == 3):
         clf.fit(X_train,y_train)
         y_pred = clf.predict(X_test)
         acc = accuracy(y_pred,y_test)
-        print("Precision:")
+        print("Accuracy:")
         print(acc)
+        precision = precision_score(y_test, y_pred,average='macro', zero_division=1)
+        print("Precision:")
+        print(precision)
+        sensitivity = recall_score(y_test, y_pred,average='macro', zero_division=1)
+        print("Sensitivity:")
+        print(sensitivity)
+        tn, fp, fn, tp = confusion_matrix(y_test, y_pred).ravel()
+        specificity = tn / (tn + fp)
+        print("Specifity:")
+        print(specificity)
+        f1 = f1_score(y_test, y_pred,average='macro', zero_division=1)
+        print("F1 score:")
+        print(f1)
+
 
 else:
     print("Opcion invalida")

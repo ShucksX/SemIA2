@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
-
+from sklearn.metrics import f1_score
+from sklearn.metrics import confusion_matrix
+from sklearn.metrics import recall_score
+from sklearn.metrics import precision_score
 
 import numpy as np
 import csv
@@ -44,7 +47,7 @@ class Perceptron:
         y_predicted = self.activation_func(linear_output)
         return y_predicted
 
-
+print("Red neuronal")
 print("Cual dataset vas a usar? (1 a 3)")
 dataset = int(float(input()))
 if(dataset == 1):
@@ -89,11 +92,20 @@ elif(dataset == 2):
         X_train, X_test, y_train, y_test = train_test_split(X2,y2, test_size = 0.2, random_state=1234)
         p = Perceptron(learning_rate=0.01, n_iters=1000)
         p.fit(X_train, y_train)
-        predictions = p.predict(X_test)
-        acc = accuracy(predictions,y_test)
-        print("Precision:")
+        y_pred = p.predict(X_test)
+        acc = accuracy(y_pred,y_test)
+        print("Accuracy:")
         print(acc)
-
+        precision = precision_score(y_test, y_pred,average='macro', zero_division=1)
+        print("Precision:")
+        print(precision)
+        sensitivity = recall_score(y_test, y_pred,average='macro', zero_division=1)
+        print("Sensitivity:")
+        print(sensitivity)
+        f1 = f1_score(y_test, y_pred,average='macro', zero_division=1)
+        print("F1 score:")
+        print(f1)
+        
 elif(dataset == 3):
     X3 = np.ndarray(shape=(768,8), dtype=float, order='F')
     y3 = np.ndarray(shape=(768), dtype=float, order='F')
@@ -115,11 +127,23 @@ elif(dataset == 3):
         X_train, X_test, y_train, y_test = train_test_split(X3,y3, test_size = 0.2, random_state=1234)
         p = Perceptron(learning_rate=0.01, n_iters=1000)
         p.fit(X_train, y_train)
-        predictions = p.predict(X_test)
-        acc = accuracy(predictions,y_test)
-        print("Precision:")
+        y_pred = p.predict(X_test)
+        acc = accuracy(y_pred,y_test)
+        print("Accuracy:")
         print(acc)
-
+        precision = precision_score(y_test, y_pred,average='macro', zero_division=1)
+        print("Precision:")
+        print(precision)
+        sensitivity = recall_score(y_test, y_pred,average='macro', zero_division=1)
+        print("Sensitivity:")
+        print(sensitivity)
+        tn, fp, fn, tp = confusion_matrix(y_test, y_pred).ravel()
+        specificity = tn / (tn + fp)
+        print("Specifity:")
+        print(specificity)
+        f1 = f1_score(y_test, y_pred,average='macro', zero_division=1)
+        print("F1 score:")
+        print(f1)
 else:
     print("Opcion invalida")
 print("Programa terminado, presiona enter para terminar")
